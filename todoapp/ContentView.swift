@@ -8,17 +8,124 @@
 import SwiftUI
 
 struct ContentView: View {
+    enum Field: Hashable {
+        case todoEnum(id: UUID)
+    }
+    
+    @State private var contentVM = ContentViewViewModel()
+    
+    @FocusState private var focusField: Field?
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        ZStack(
+            alignment: .bottomTrailing
+        ) {
+            ScrollView {
+                LazyVStack(
+                    alignment: .leading,
+                    spacing: 10
+                    
+                )
+                {
+                    TextField(
+                        "Enter Todo",
+                        text: $contentVM.text,
+                        axis: .vertical
+                    )
+                    .onSubmit {
+                        contentVM.submitText()
+                    }
+                    .autocorrectionDisabled(true)
+                    .padding(.bottom, 10)
+                    ForEach($contentVM.toDoList) { $todo in
+                        HStack {
+                            Toggle(
+                                isOn: $todo.isCompleted
+                            ){}
+                                .toggleStyle(ChecklistToggleStyle())
+                            if !todo.isClicked {
+                                Text(todo.text)
+                                    .strikethrough(todo.isCompleted)
+                                    .onTapGesture {
+                                        contentVM.handleIsClicked(todo:&todo)
+                                    }
+                                
+                            } else {
+                                TextField(
+                                    todo.text,
+                                    text: $todo.text
+                                )
+                                .onSubmit {
+                                    contentVM.handleIsClicked(todo:&todo)
+                                    print(contentVM.toDoList)
+                                }
+                                .onAppear{focusField = .todoEnum(id: todo.id)}
+                                .focused($focusField, equals: .todoEnum(id: todo.id))
+                                .autocorrectionDisabled(true)
+                                .strikethrough(todo.isCompleted)
+                                .padding(.vertical, -1)
+                                
+                            }
+                        }
+                    }
+                }
+                .padding()
+                .navigationTitle("Todo App")
+                //                .toolbar {
+                //                    ToolbarItemGroup(placement: .bottomBar) {
+                //                        Spacer()
+                //                        Image(systemName: "plus")
+                //                    }
+                //                }
+                //                .frame(
+                //                    maxWidth: .infinity,
+                //                    maxHeight: .infinity,
+                //                    alignment: .topLeading
+                //                )
+            }
+            Button {
+                print("Add")
+            }
+            label: {
+                Image(systemName: "plus")
+                    .fontWeight(.bold)
+                    .padding(20)
+                    .background(.blue)
+                    .foregroundColor(.white)
+                    .clipShape(Circle())
+                    .shadow(radius: 4, x: 0, y: 2)
+                
+            }
+            .padding(.trailing, 20)
         }
-        .padding()
     }
 }
 
+struct ChecklistToggleStyle: ToggleStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        Button {
+            configuration.isOn.toggle()
+        } label: {
+            HStack {
+                Image(systemName: configuration.isOn
+                      ? "checkmark.circle.fill"
+                      : "circle")
+                .foregroundColor(
+                    configuration.isOn
+                    ? .green
+                    : .primary
+                )
+                configuration.label
+            }
+        }
+        .tint(.primary)
+        .buttonStyle(.borderless)
+    }
+}
+
+
 #Preview {
-    ContentView()
+    NavigationStack {
+        ContentView()
+    }
 }
