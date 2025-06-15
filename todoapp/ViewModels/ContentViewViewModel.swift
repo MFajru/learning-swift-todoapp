@@ -20,7 +20,6 @@ class ContentViewViewModel {
         )
         toDoList.append(todo)
         text = ""
-        print(toDoList)
     }
     
     func handleIsClicked(todo: inout TodoModel) {

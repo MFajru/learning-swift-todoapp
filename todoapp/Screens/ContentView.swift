@@ -18,7 +18,7 @@ struct ContentView: View {
     
     var body: some View {
         ZStack(
-            alignment: .bottomTrailing
+            alignment: .top
         ) {
             ScrollView {
                 LazyVStack(
@@ -27,16 +27,16 @@ struct ContentView: View {
                     
                 )
                 {
-                    TextField(
-                        "Enter Todo",
-                        text: $contentVM.text,
-                        axis: .vertical
-                    )
-                    .onSubmit {
-                        contentVM.submitText()
-                    }
-                    .autocorrectionDisabled(true)
-                    .padding(.bottom, 10)
+                    //                    TextField(
+                    //                        "Enter Todo",
+                    //                        text: $contentVM.text,
+                    //                        axis: .vertical
+                    //                    )
+                    //                    .onSubmit {
+                    //                        contentVM.submitText()
+                    //                    }
+                    //                    .autocorrectionDisabled(true)
+                    //                    .padding(.bottom, 10)
                     ForEach($contentVM.toDoList) { $todo in
                         HStack {
                             Toggle(
@@ -57,7 +57,6 @@ struct ContentView: View {
                                 )
                                 .onSubmit {
                                     contentVM.handleIsClicked(todo:&todo)
-                                    print(contentVM.toDoList)
                                 }
                                 .onAppear{focusField = .todoEnum(id: todo.id)}
                                 .focused($focusField, equals: .todoEnum(id: todo.id))
@@ -70,6 +69,7 @@ struct ContentView: View {
                     }
                 }
                 .padding()
+                .padding(.top, 30)
                 .navigationTitle("Todo App")
                 //                .toolbar {
                 //                    ToolbarItemGroup(placement: .bottomBar) {
@@ -83,20 +83,40 @@ struct ContentView: View {
                 //                    alignment: .topLeading
                 //                )
             }
-            Button {
-                print("Add")
+            .overlay(
+                alignment: .topLeading
+            ) {
+                TextField(
+                    "Enter Todo",
+                    text: $contentVM.text,
+                    axis: .vertical
+                )
+                .onSubmit {
+                    contentVM.submitText()
+                }
+                .autocorrectionDisabled(true)
+                .padding(.leading, 20)
+                .padding(.vertical, 10)
+                .background(Color.white)
             }
-            label: {
-                Image(systemName: "plus")
-                    .fontWeight(.bold)
-                    .padding(20)
-                    .background(.blue)
-                    .foregroundColor(.white)
-                    .clipShape(Circle())
-                    .shadow(radius: 4, x: 0, y: 2)
-                
+            .overlay(
+                alignment: .bottomTrailing
+            ) {
+                Button {
+                    print("Add")
+                }
+                label: {
+                    Image(systemName: "plus")
+                        .fontWeight(.bold)
+                        .padding(20)
+                        .background(.blue)
+                        .foregroundColor(.white)
+                        .clipShape(Circle())
+                        .shadow(radius: 4, x: 0, y: 2)
+                    
+                }
+                .padding(.trailing, 20)
             }
-            .padding(.trailing, 20)
         }
     }
 }

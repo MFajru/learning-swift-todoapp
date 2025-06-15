@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		CCC868CD2DFEDF4C0067C217 /* readme.MD in Resources */ = {isa = PBXBuildFile; fileRef = CCC868CC2DFEDF4C0067C217 /* readme.MD */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		CC7029672DD7504600FB94E5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -29,6 +33,7 @@
 		CC7029702DD7504600FB94E5 /* todoappUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = todoappUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC7029972DD99F4F00FB94E5 /* todoappmacosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = todoappmacosTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC7029A12DD99F4F00FB94E5 /* todoappmacosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = todoappmacosUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCC868CC2DFEDF4C0067C217 /* readme.MD */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme.MD; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -95,6 +100,7 @@
 				CC7029692DD7504600FB94E5 /* todoappTests */,
 				CC7029732DD7504600FB94E5 /* todoappUITests */,
 				CC7029572DD7504400FB94E5 /* Products */,
+				CCC868CC2DFEDF4C0067C217 /* readme.MD */,
 			);
 			sourceTree = "<group>";
 		};
@@ -278,6 +284,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CCC868CD2DFEDF4C0067C217 /* readme.MD in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
