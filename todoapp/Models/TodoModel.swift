@@ -13,3 +13,9 @@ struct TodoModel: Identifiable {
     var isCompleted: Bool
     var isClicked: Bool
 }
+
+struct ToDoJsonPlaceholder: Decodable, Identifiable {
+    let id: Int
+    let title: String
+    let completed: Bool
+}

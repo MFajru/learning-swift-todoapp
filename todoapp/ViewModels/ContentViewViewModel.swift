@@ -7,10 +7,20 @@
 
 import Foundation
 
+@MainActor
 @Observable
 class ContentViewViewModel {
-    var toDoList: [TodoModel] = []
+    var toDoList: [TodoModel] = [TodoModel(
+        text: "I want to sleep at 9 pm", isCompleted: false, isClicked: false
+    ), TodoModel(
+        text: "I want to play padel", isCompleted: false, isClicked: false
+    ), TodoModel(
+        text: "I want to watch some great movies", isCompleted: false, isClicked: false
+    )]
     var text: String = ""
+    
+    var errorMsg: String?
+    var fetchedToDo: [ToDoJsonPlaceholder] = []
     
     func submitText() {
         let todo: TodoModel = TodoModel(
@@ -24,6 +34,16 @@ class ContentViewViewModel {
     
     func handleIsClicked(todo: inout TodoModel) {
         todo.isClicked.toggle()
+    }
+    
+    func loadToDos() async{
+        do {
+            let data = try await NetworkManager.shared.fetchToDos()
+            print(data)
+            fetchedToDo = data
+        } catch {
+            errorMsg = error.localizedDescription
+        }
     }
     
 }

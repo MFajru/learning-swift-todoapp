@@ -27,16 +27,10 @@ struct ContentView: View {
                     
                 )
                 {
-                    //                    TextField(
-                    //                        "Enter Todo",
-                    //                        text: $contentVM.text,
-                    //                        axis: .vertical
-                    //                    )
-                    //                    .onSubmit {
-                    //                        contentVM.submitText()
-                    //                    }
-                    //                    .autocorrectionDisabled(true)
-                    //                    .padding(.bottom, 10)
+                    ForEach(contentVM.fetchedToDo) { fTodo in
+                        Text(fTodo.title)
+                    }
+                    
                     ForEach($contentVM.toDoList) { $todo in
                         HStack {
                             Toggle(
@@ -71,17 +65,22 @@ struct ContentView: View {
                 .padding()
                 .padding(.top, 30)
                 .navigationTitle("Todo App")
-                //                .toolbar {
-                //                    ToolbarItemGroup(placement: .bottomBar) {
-                //                        Spacer()
-                //                        Image(systemName: "plus")
-                //                    }
-                //                }
-                //                .frame(
-                //                    maxWidth: .infinity,
-                //                    maxHeight: .infinity,
-                //                    alignment: .topLeading
-                //                )
+                
+                // toolbar for showing like footer menu
+                //                                .toolbar {
+                //                                    ToolbarItemGroup(placement: .bottomBar) {
+                //                                        Spacer()
+                //                                        Image(systemName: "plus")
+                //                                    }
+                //                                }
+                //                                .frame(
+                //                                    maxWidth: .infinity,
+                //                                    maxHeight: .infinity,
+                //                                    alignment: .topLeading
+                //                                )
+            }
+            .task {
+                 await contentVM.loadToDos()
             }
             .overlay(
                 alignment: .topLeading
