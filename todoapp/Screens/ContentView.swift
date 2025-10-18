@@ -80,7 +80,7 @@ struct ContentView: View {
                 //                                )
             }
             .task {
-                 await contentVM.loadToDos()
+                await contentVM.loadToDos()
             }
             .overlay(
                 alignment: .topLeading

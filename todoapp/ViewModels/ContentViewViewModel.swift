@@ -36,9 +36,20 @@ class ContentViewViewModel {
         todo.isClicked.toggle()
     }
     
+    // pure fetch, just fetch the data
+    func fetchToDos() async throws -> [ToDoJsonPlaceholder]{
+        guard let url = URL(string: "https://jsonplaceholder.typicode.com/todos?_page=1&_limit=10") else {
+            throw NetworkManagerError.invalidURL
+        }
+        
+        return try await NetworkManager.shared.fetchData(from: url)
+        
+    }
+    
+    // load the data to be shown in the view (data transformation, etc, do in here)
     func loadToDos() async{
         do {
-            let data = try await NetworkManager.shared.fetchToDos()
+            let data = try await fetchToDos()
             print(data)
             fetchedToDo = data
         } catch {
